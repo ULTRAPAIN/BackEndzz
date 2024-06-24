@@ -11,18 +11,25 @@
 
 
 const mongoose = require('mongoose');
-require('dotenev' ).config();
+require('dotenv').config();
 
-const dbconnect=()=>{
-    mongoose.connect(process.env.DATABASE_URL,{UseNewUrlParser:true,useUnifiedTopology:true})
-    .then(()=>{
-        console.log("Connected to the database")
-    })
-    .catch(error){
-        console.log("Error in connecting to the database")
-        console.error(error.message)
-        process.exit(1)
+const dbconnect = () => {
+    const dbUrl = process.env.DATABASE_URL;
+    
+    if (!dbUrl) {
+        console.error("DATABASE_URL is not defined in the environment variables");
+        process.exit(1);
     }
+
+    mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => {
+            console.log("Connected to the database successfully");
+        })
+        .catch((error) => {
+            console.log("Error in connecting to the database");
+            console.error(error.message);
+            process.exit(1);
+        });
 }
 
-module.exports=dbconnect;
+module.exports = dbconnect;
