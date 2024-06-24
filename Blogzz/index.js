@@ -16,7 +16,7 @@ app.get("/",(req,res)=>{
     res.send("Welcome to the Blogzz Home Page")
 })
 
-//connecting to the database
+//connecting to the database 
 dbconnect();
 
 //App running
